@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Improem</title>
+<meta name="description" content="Poems written on bar napkins. Photographed as found. Cross-outs left in. Eyes redacted.">
+<meta property="og:title" content="Improem">
+<meta property="og:description" content="Poems written on bar napkins. Photographed as found. Cross-outs left in. Eyes redacted.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://improem.ericthelefty.com/">
+<meta property="og:image" content="https://improem.ericthelefty.com/img/rock.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a black case file. Each poem is a spread — the napkin on black on the left,
+   its typed transcript on white paper on the right — headed by a giant pixel date. */
+:root {
+  --void: #050505;      /* page ground */
+  --ink: #0a0a0a;       /* type on paper */
+  --paper: #f4f4f2;     /* typed transcript sheet */
+  --chalk: #ededeb;     /* type on the void */
+  --ash: #8a8a87;       /* secondary labels */
+  --rule: #2a2a29;      /* hairlines on the void */
+  --pixel: "VT323", "Courier New", ui-monospace, monospace;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gut: max(16px, env(safe-area-inset-left, 0px));
+  --gut-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--void); color: var(--chalk);
+  font: 400 15px/1.5 var(--mono);
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--void);
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--chalk); outline-offset: 3px; }
+
+/* ---------- bar ---------- */
+.bar-top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: var(--void); border-bottom: 1px solid var(--rule);
+  padding-left: var(--gut); padding-right: var(--gut-r);
+}
+.bar-top .in {
+  max-width: 1280px; margin: 0 auto; height: 52px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.wordmark { font: 400 30px/1 var(--pixel); letter-spacing: .08em; text-decoration: none; }
+.nav { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.nav a, .nav button {
+  font: 600 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--chalk); background: none; border: 1px solid var(--rule);
+  padding: 8px 10px; text-decoration: none; cursor: pointer;
+}
+.nav a:hover, .nav button:hover { background: var(--chalk); color: var(--void); border-color: var(--chalk); }
+.nav .on { background: var(--chalk); color: var(--void); border-color: var(--chalk); }
+.nav .sm-only { display: none; }
+@media (max-width: 520px) { .nav .hide-sm { display: none; } .nav .sm-only { display: inline; } .wordmark { font-size: 24px; } .nav { flex-wrap: nowrap; gap: 4px; } .nav a, .nav button { padding: 8px 7px; letter-spacing: .08em; } .bar-top .in { gap: 8px; } }
+@media (max-width: 380px) { .wordmark { font-size: 20px; } .nav a, .nav button { padding: 8px 5px; } }
+
+.wrap { padding-left: var(--gut); padding-right: var(--gut-r); }
+.wrap > .in { max-width: 1280px; margin: 0 auto; }
+
+/* ---------- cover ---------- */
+.cover { padding-block: 40px 56px; border-bottom: 1px solid var(--rule); }
+.cover .in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 40px; align-items: center; }
+.cover h1 { margin: 0; }
+.cover h1 img { width: min(100%, 460px); display: block; animation: flicker 1.6s steps(1) 1 both; }
+.vol-tag { font: 400 clamp(44px, 7vw, 88px)/.9 var(--pixel); margin: 18px 0 6px; letter-spacing: .02em; }
+.range { font: 400 22px/1 var(--pixel); color: var(--ash); letter-spacing: .06em; }
+.thesis { margin: 26px 0 0; max-width: 40ch; color: var(--chalk); font-size: 14px; }
+.thesis b { font-weight: 600; }
+.stats { display: flex; gap: 0; margin-top: 26px; border: 1px solid var(--rule); width: fit-content; max-width: 100%; flex-wrap: wrap; }
+.stats div { padding: 10px 16px; border-right: 1px solid var(--rule); }
+.stats div:last-child { border-right: 0; }
+.stats .n { font: 400 34px/1 var(--pixel); display: block; }
+.stats .l { font: 600 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ash); }
+.rock { margin: 0; transform: rotate(-2.4deg); }
+.rock img { width: 100%; display: block; filter: contrast(1.05); }
+@media (max-width: 820px) { .cover .in { grid-template-columns: 1fr; } .rock { order: -1; } }
+@keyframes flicker { 0%{opacity:1} 8%{opacity:.15} 12%{opacity:1} 30%{opacity:.4} 33%{opacity:1} 100%{opacity:1} }
+@media (prefers-reduced-motion: reduce) { .cover h1 img { animation: none; } }
+
+/* ---------- index wall ---------- */
+.index { padding-block: 44px; border-bottom: 1px solid var(--rule); }
+.label { font: 600 11px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--ash); margin: 0 0 18px; }
+.wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+.wall a {
+  background: var(--void); text-decoration: none; padding: 14px 14px 12px;
+  font: 400 30px/1 var(--pixel); display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+}
+.wall a small { font: 600 10px/1 var(--mono); letter-spacing: .12em; color: var(--ash); }
+.wall a:hover { background: var(--chalk); color: var(--void); }
+.wall a:hover small { color: var(--void); }
+
+/* ---------- poems ---------- */
+.poem { padding-block: 64px 24px; scroll-margin-top: 60px; }
+.stamp { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin-bottom: 22px; }
+.stamp .big { font: 400 clamp(60px, 22vw, 220px)/.72 var(--pixel); white-space: nowrap; letter-spacing: -.01em; }
+.stamp .big span { color: var(--ash); font-size: .28em; letter-spacing: .04em; vertical-align: top; margin-right: .3em; }
+.stamp .meta { text-align: right; font: 600 10px/1.7 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ash); white-space: nowrap; }
+.spread { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; align-items: stretch; }
+.napkin { margin: 0; background: #000; position: relative; }
+.napkin img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 1000 / 1545; }
+.sheet {
+  background: var(--paper); color: var(--ink); padding: 34px clamp(20px, 4vw, 48px) 28px;
+  display: flex; flex-direction: column; min-width: 0;
+}
+.sheet .date { align-self: flex-end; font: 400 26px/1 var(--pixel); letter-spacing: .04em; margin-bottom: 26px; }
+.verse { font: 400 clamp(19px, 1.65vw, 23px)/1.22 var(--pixel); flex: 1; }
+.verse .ln { padding-left: 2ch; text-indent: -2ch; min-height: 1.22em; overflow-wrap: anywhere; }
+.verse .gap { height: .9em; }
+.verse .turn { margin: 1.1em 0; border-top: 1px dashed var(--ink); opacity: .35; }
+.verse s { text-decoration-thickness: 2px; }
+.redact { background: var(--ink); color: transparent; display: inline-block; width: 3.4ch; height: .78em; vertical-align: -.06em; }
+.sheet .foot { display: flex; justify-content: space-between; margin-top: 28px; font: 600 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: #6b6b68; }
+@media (max-width: 760px) {
+  .spread { grid-template-columns: 1fr; }
+  .napkin img { aspect-ratio: auto; height: auto; }
+  .stamp .meta { display: none; }
+}
+.poem.flash .sheet { animation: flash .9s steps(2) 2; }
+@keyframes flash { 50% { background: var(--ink); color: var(--paper); } }
+@media (prefers-reduced-motion: reduce) { .poem.flash .sheet { animation: none; outline: 4px solid var(--chalk); } }
+
+/* ---------- evidence (pictures) ---------- */
+.evidence { padding-block: 72px; overflow: hidden; }
+.evidence figure { margin: 0 auto; max-width: 900px; }
+.evidence img { width: 100%; display: block; }
+.evidence figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; font: 600 11px/1.4 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ash); }
+.evidence figcaption b { color: var(--chalk); font: 400 26px/1 var(--pixel); letter-spacing: .06em; }
+
+/* ---------- pending volume ---------- */
+.pending { padding-block: 72px; border-top: 1px solid var(--rule); scroll-margin-top: 60px; }
+.pending .vol-tag { margin-top: 0; }
+.redacted-block { display: grid; gap: 10px; margin: 28px 0; max-width: 520px; }
+.redacted-block i { display: block; height: 18px; background: var(--chalk); }
+.redacted-block i:nth-child(2) { width: 82%; } .redacted-block i:nth-child(3) { width: 64%; } .redacted-block i:nth-child(4) { width: 90%; } .redacted-block i:nth-child(5) { width: 38%; }
+.pending p { max-width: 52ch; color: var(--ash); }
+
+/* ---------- end ---------- */
+.end { padding-block: 64px 96px; border-top: 1px solid var(--rule); }
+.end .in { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 40px; align-items: end; }
+.end img { width: 100%; display: block; transform: rotate(1.5deg); }
+.eof { font: 400 clamp(56px, 10vw, 128px)/.8 var(--pixel); margin: 0; }
+.end p { color: var(--ash); max-width: 46ch; }
+.keys { font: 600 10px/1.8 var(--mono); letter-spacing: .14em; color: var(--ash); text-transform: uppercase; }
+.keys kbd { font: inherit; border: 1px solid var(--rule); padding: 1px 6px; color: var(--chalk); }
+@media (max-width: 760px) { .end .in { grid-template-columns: 1fr; } }
+
+/* ---------- volume headers ---------- */
+.volhead { padding-block: 72px 32px; border-top: 1px solid var(--rule); scroll-margin-top: 60px; }
+.volhead .in { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end; }
+.volhead h2 { margin: 0; }
+.volhead h2 img { width: min(100%, 520px); display: block; transform: rotate(-1.5deg); }
+@media (max-width: 760px) { .volhead .in { grid-template-columns: 1fr; } }
+.spread + .spread { margin-top: 18px; }
+.wall-group + .wall-group { margin-top: 28px; }
+.wall-group h3 { font: 400 26px/1 var(--pixel); letter-spacing: .06em; margin: 0 0 10px; }
+.next-vol { margin-top: 28px; font: 600 11px/1.6 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ash); }
+.next-vol b { display: inline-block; background: var(--chalk); color: var(--void); padding: 2px 6px; margin-right: 8px; font-weight: 600; }
+</style>
+
+</head>
+<body>
+<header class="bar-top">
+  <div class="in">
+    <a class="wordmark" href="#top">IMPROEM</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#v03" class="on" id="nav-v03"><span class="hide-sm">Vol. </span><span class="sm-only">V</span>03</a>
+      <a href="#v02" id="nav-v02"><span class="hide-sm">Vol. </span><span class="sm-only">V</span>02</a>
+      <a href="#v01" id="nav-v01"><span class="hide-sm">Vol. </span><span class="sm-only">V</span>01</a>
+      <a href="#index" class="hide-sm">Index</a>
+      <button type="button" id="random" aria-label="Random napkin"><span class="hide-sm">Random napkin</span><span class="sm-only">Rand</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="index wrap" id="index" aria-labelledby="index-label">
+    <div class="in">
+      <p class="label" id="index-label">Index · every napkin by date, newest file first</p>
+      <div id="walls"></div>
+    </div>
+  </section>
+
+  <section class="volhead wrap" id="v03">
+    <div class="in">
+      <div>
+        <p class="label">Open file · in progress</p>
+        <h2><img src="img/title.png" alt="IMPROEM" width="482" height="118"></h2>
+        <div class="vol-tag">VOL. 03</div>
+      </div>
+      <div>
+        <div class="range">2026.10.28 –</div>
+        <div class="stats" data-stats="v03">
+          <div><span class="n" data-k="poems">1</span><span class="l">Poems</span></div>
+          <div><span class="n" data-k="napkins">1</span><span class="l">Napkins</span></div>
+          <div><span class="n" data-k="redact">0</span><span class="l">Scribbled out</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="feed-v03"></div>
+
+  <section class="cover wrap" style="border-top:1px solid var(--rule)" id="v02">
+    <div class="in">
+      <div>
+        <h1><img src="img/title.png" alt="IMPROEM" width="482" height="118"></h1>
+        <div class="vol-tag">VOL. 02</div>
+        <div class="range">2026.04.22 – 2026.10.14</div>
+        <div class="stats" data-stats="v02">
+          <div><span class="n" data-k="poems">17</span><span class="l">Poems</span></div>
+          <div><span class="n" data-k="napkins">21</span><span class="l">Napkins</span></div>
+          <div><span class="n" data-k="redact">6</span><span class="l">Scribbled out</span></div>
+        </div>
+      </div>
+      <figure class="rock"><img src="img/rock.jpg" alt="The Rock of Gibraltar, scrawled over by hand with the words ROCK OF GERBALTER." width="750" height="490"></figure>
+    </div>
+  </section>
+
+
+  <div id="feed-v02"></div>
+
+  <section class="volhead wrap" id="v01">
+    <div class="in">
+      <div>
+        <p class="label">Previous file</p>
+        <h2><img src="img/title01.png" alt="IMPROEM VOL. 01" width="472" height="199"></h2>
+      </div>
+      <div>
+        <div class="range">2026.02.14 – 2026.04.15</div>
+        <div class="stats" data-stats="v01">
+          <div><span class="n" data-k="poems">8</span><span class="l">Poems</span></div>
+          <div><span class="n" data-k="napkins">10</span><span class="l">Pages</span></div>
+          <div><span class="n" data-k="redact">1</span><span class="l">Scribbled out</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="feed-v01"></div>
+
+  <section class="end wrap">
+    <div class="in">
+      <img src="img/orgchart.jpg" alt="A photocopied organizational chart titled Chapters Organizational Structure." width="900" height="1125">
+      <div>
+        <p class="eof">END OF FILE</p>
+        <p>All napkins photographed as found. Cross-outs left in. Eyes redacted.</p>
+        <p class="next-vol"><b>VOL. 03</b>Open file · new napkins added at the top</p>
+        <p class="keys">Keys: <kbd>J</kbd> next napkin · <kbd>K</kbd> previous · <kbd>R</kbd> random</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="application/json" id="data">{"volumes": [{"id": "v03", "label": "VOL. 03", "range": "2026.10.28 –", "items": [{"kind": "poem", "id": "v03-261028", "date": "2026.10.28", "napkins": 1, "pages": [{"img": "img/v03-261028.jpg", "lines": ["I got to hold the axe,", "The wood shaft felt incredible", "Hard, strong and tasty", "The fruit roll up comes up", "UP THE FRUITS", "Fuck them up good, make them", "into a smoothie and squeeze", "their hearts so they burst.", "The blood splattered across the", "walls, dripping and oozing as it fell.", "It looked up at me and I", "had tears of joy.", "AS I JERKED OFF"]}]}]}, {"id": "v02", "label": "VOL. 02", "range": "2026.04.22 – 2026.10.14", "cover": "img/rock.jpg", "items": [{"kind": "poem", "id": "v02-260422", "date": "2026.04.22", "img": "img/v02-260422.jpg", "parts": [["I'm sharing the snacks but not", "the drinks and don't put your", "fucking hand on my mouth.", "Respect PERSONAL SPACE Pal!", "Stay out of my bubble.", "As I [BAR] become a", "different person over the", "years I forget about how", "amazing my prior person", "was –", "\"We'll never meet again!\"", "She said, wistfully tossing", "her hair over her shoulder.", "That was the secret sign for the", "rest of the gang to place the", "dynamite in the cave and run", "as fast as they could to the nearest", "lake. They would be safe there", "when it blew.", "With steady stimulation, it grew,", "until everyone clearly knew"]], "napkins": 1}, {"kind": "poem", "id": "v02-260422b", "date": "2026.04.22", "img": "img/v02-260422b.jpg", "parts": [["I forgot to put the oil in my oil packet, so ~~insted~~ instead I", "ordered breadsticks.", "and gently dipped the tip in the sauce and savored", "OH BOY, SO YUMMY!", "This wasn't the first time she realized that", "she was lost.", "", "Get a Sleep Number before they are forever gone", "Also stop and enjoy simple things.", "She said this seeking home; but look there,", "A white whale, forever we shall hunt, and of its", "ivory bones we will make rings. OOOOO", "", "New places, new faces, new ideas and [BAR] new points", "of view. Putting myself in new places, meeting new", "future friends; what would life be if we don't", "put ourselves out there? La vie est magnifique", "et je la vivrais \"to the fullest\" – tous les jours!"]], "napkins": 1}, {"kind": "poem", "id": "v02-260426", "date": "2026.04.26", "img": "img/v02-260426.jpg", "parts": [["I knew her; by the way", "she ordered gimlets.", "", "Green envy as sour as lime", "and creamy lace necklace", "", "\"Nice thighs!\", intones", "a gruff, naughty voice", "", "Licking, lapping, sniffing,", "smelling...", "Take me home, daddy. I'm", "all out of cheerios.", "My life is incomplete", "without those tasty O's.", "Like her mouth sipping", "the cool gimlet. \"Was that", "gin?\" she orgasmed."]], "napkins": 1}, {"kind": "pic", "id": "ev-hotwater", "img": "img/ev-hotwater.jpg", "alt": "Two hot water dispensers behind a bar, next to stacked cups.", "tilt": 2, "caption": "EXHIBIT A"}, {"kind": "poem", "id": "v02-260429", "date": "2026.04.29", "img": "img/v02-260429.jpg", "parts": [["Splayed, Judith dropped", "the album and broke the", "porcelain flower.", "And followed it up with", "a golden shower", "Which is known to leave one", "smelling like the town mule", "Guss, was such a nice ass", "The town's ass. ~~Good~~ donkey", "He has so many useful qualities", "Someday he'll earn his keep.", "Tomorrow we'll all be", "cleaning up the sweaty,", "pulsing mess."]], "napkins": 1}, {"kind": "poem", "id": "v02-260506", "date": "2026.05.06", "img": "img/v02-260506.jpg", "parts": [["Don't care", "This Arby's can stay", "frisky without me", "", "As I drink a bottle of", "whiskey while I pee,", "I think about how the", "world never liked me anyway.", "\"Absolutely Eat My Ass\"", "Their next ~~tattoo~~ would be", "the most meaningful words", "they had ever uttered –", "\"Don't worry, I'm", "covered in Mustard.\""]], "napkins": 1}, {"kind": "pic", "id": "v02-buzz", "caption": "EXHIBIT B", "img": "img/buzz.jpg", "alt": "A hand pulling two canned cocktails out of a cooler bag.", "tilt": -3}, {"kind": "poem", "id": "v02-260603", "date": "2026.06.03", "img": "img/v02-260603.jpg", "parts": [["Only once a year they show", "up for you and is that enough?", "Mondays are when you wish", "upon the stars to meet your", "match.", "\"Light the match.", "Burn it.", "Burn it to the ground.\"", "Now let us pause, and", "consider the wealthy nuns", "Humming and", "strumming, just for", "fun.", "Fingering everything under", "the sun", "their bodies moved until", "the sun rose the next day", "The sheets were a mess upon", "the floor. Wrinkled in a pile."], ["His balls were also wrinkled", "and he had piles,", "When we look back, it's the", "taste that sticks in your teeth."]], "napkins": 2}, {"kind": "poem", "id": "v02-260606", "date": "2026.06.06", "img": "img/v02-260606.jpg", "parts": [["Do you come here when we're not here with you?", "Yes, cuz you fucking suck.", "Fucking suck like a terrible vacuum.", "Suck like a ~~A~~ Vacuum on Bare floor Setting", "I've never had silence in the depths of my mind.", "ARE THERE NO VACUUMS THERE OR ARE THEY", "THE FANCY KIND THAT DON'T HURT MY TEETH?", "So I bought 6 Costco toothpaste", "and slathered myself", "With Vaseline and lube. I needed to make it all the way", "down the slide first. Everything relied on this one moment.", "I pooped ? Farted hard? I think I'm chilling", "Ouch why is this happening to [BAR] me now", "I brought this upon myself for abusing my love bone. I couldn't help", "it – the moon was hanging low over my [BAR] wet hedges and", "the only way to cure that is time with my best fist.", "my first ~~fist~~ was my ~~best~~ ~~fist~~, but you", "will always be my favorite.", "Until... he betrayed me... hit, punch, smack,", "bite? I have never known loss until that fateful day", "FUCK YOU! AAAA"]], "napkins": 1}, {"kind": "pic", "id": "ev-texts", "img": "img/ev-texts.jpg", "alt": "A text conversation with a stranger. \"Sir Humboldt Van Winkerstein. How could you forget that night we spent in Milan!?\" They reply: \"fuck you.\"", "tilt": -2, "caption": "EXHIBIT C"}, {"kind": "poem", "id": "v02-260610", "date": "2026.06.10", "img": "img/v02-260610.jpg", "parts": [["Girls rule, Boys", "Drool, theys are", "Cool", "But the stillness when two", "dudes awkwardly stand at", "the urinals.", "", "Comparing the sizes of them", "selves thru sideways glances", "so DERIVATIVE", "Your original form could only", "be compared to a hot, wet", "waterfall of gooey cheese flow.", "Flow mo' and mo'!", "Drip until you can't no mo'!", "You'll never have a dry day again", "As long as you make ~~me~~ me scream.", "", "Well, then I will cream +", "it will Be yummy with my", "cookie."]], "napkins": 2}, {"kind": "poem", "id": "v02-260617", "date": "2026.06.17", "img": "img/v02-260617.jpg", "parts": [["That's not ranch on my thigh.", "He started licking everyway", "I'd never met such a talented man.", "He took his wand and tamed the [BAR]", "weevils to fill their own mouths first.", "Though no fluid could end my", "thirst.", "But I had a Gatorade to", "help."]], "napkins": 1}, {"kind": "pic", "id": "ev-bottle", "img": "img/ev-bottle.jpg", "alt": "A blue water bottle abandoned at the foot of a tree, at night.", "tilt": -3, "caption": "EXHIBIT D"}, {"kind": "poem", "id": "v02-260624", "date": "2026.06.24", "img": "img/v02-260624.jpg", "parts": [["I got scared by the word", "spatchcock at Trader Joe's", "Joe famous for splitting", "The pineapple was in 2 perfect", "halves, equal in every way.", "Great for a pair, for", "eating and for play", "BUT IT DOTH WIGGLE", "TO MY DISMAY", "AND SO I TOLD IT, \"GO AWAY!\"", "\"No, no,\" it said. \"I will not go\"", "I whiped my hair out of", "my face. And the", "sweat off my brow.", "tingles with the sway", "of my manly thighs", "which are, at this time EXHAUSTED", "So I shall, with no further adue", "Sink into Silence...", "the end."]], "napkins": 1}, {"kind": "poem", "id": "v02-260715", "date": "2026.07.15", "img": "img/v02-260715.jpg", "parts": [["There was a woman with hair so brown", "She had the smile of an angel, and", "the secret of a devil...", "She had died 37 years ago.", "Then rose from the dead in", "time for anal play. Reasonable", "ALSO, Handstuff", "I DON'T KNOW WHAT TO", "PUT AFTER THIS", "A Kiss, is just a Kiss", "Unless you miss... my mouth", "and aim lower.", "And while you're down below,", "give me your best beat-box.", "It's the basis for long-term", "commitment. Don't blush, just", "spit."]], "napkins": 1}, {"kind": "poem", "id": "v02-260901", "date": "2026.09.01", "img": "img/v02-260901.jpg", "parts": [["Quick! Grab mom's", "log splitter!", "There's a neighbor who needs", "cutting down to size.", "You could check out", "Any time, but you chose", "to stay...", "With chairs of orange and", "seas of booze, I no longer", "can feel my balls", "He came", "He saw", "The approaching army"]], "napkins": 1}, {"kind": "pic", "id": "ev-window", "img": "img/ev-window.jpg", "alt": "A sheer curtain in a sunny window, a small framed print on the wall.", "tilt": -2, "caption": "EXHIBIT E"}, {"kind": "poem", "id": "v02-260912", "date": "2026.09.12", "img": "img/v02-260912.jpg", "parts": [["It was a great combo.", "Bitches and Hoes", "\"Ben dove and Touch your", "Toes, Pissboy!\"", "I knew that I had little time to", "waste. I looked away and got lost.", "I looked back and Jesus found me.", "I said, Fuck off dude I found", "you first.", "If you knew what was good for you,", "you'd put your money in the can", "and walk out of here backwards.", "With your willy in your", "lucky sleeve", "Tuck it into my fuck", "it bucket."]], "napkins": 1}, {"kind": "pic", "id": "v02-goat", "caption": "EXHIBIT F", "img": "img/goat.jpg", "alt": "A black-and-white goat behind wire fencing, eyes barred.", "tilt": 3}, {"kind": "poem", "id": "v02-260912b", "date": "2026.09.12", "img": "img/v02-260912b.jpg", "parts": [["That was a normal break-up.", "I'm gonna go help trans", "homeless youth.", "Nepotism!", "Synonyms", "My ass is covered in", "dirty leaves", "The red crunchy kind that you", "want to bring home [BAR]", "Marge Simpson was there, disappointed", "Her tall blue, lustrous (sp?) hair waved in", "the ocean ~~air~~ there was nothing to", "help his infamed rash.", "His goat Named \"Sherpa\"", "Stuck his tongue out.", "And licked top to bottom"]], "napkins": 1}, {"kind": "poem", "id": "v02-260923", "date": "2026.09.23", "img": "img/v02-260923.jpg", "parts": [["This syrup is spicy and", "is causing problems.", "Cut it off, quick, before", "the limbs start to grow", "out of hand.", "The cream lubricated", "everything.", "The thick coating", "slip-sliding everywhere", "\"We're gonna have a soup", "jam, Tonya!\" Said Tobi.", "So she did. She jammed until", "she could jam no more.", "\"No\" Elenor cried. \"my", "knees! I need those.\"", "For I've run out of hose.", "My rose garden dies as I cry.", "~~my~~ petals perish", "Beneath the horny", "moonlight", "", "softly slowly wafting down", "into a pile of ash"]], "napkins": 2}, {"kind": "poem", "id": "v02-261007", "date": "2026.10.07", "img": "img/v02-261007.jpg", "parts": [["The special boy in-charge", "Charge the card, and do it hard", "wearing feathers and getting", "tarred", "SOAKING AWAY THE", "NIGHT", "Using loopholes to get what we", "want – the hard way.", "They take me up, they throw me", "down, they fill my cup, they take", "me to town.", "If you can't take", "me all these ways,", "Baby, you'll really", "~~LET~~ LET ME DOWN.", "Easy, baby, easy. We don't want", "to wake the neighbors.", "", "\"Hush, now. Josephine,", "be as still as the", "night is dark,\"", "Dracula whispered."]], "napkins": 2}, {"kind": "poem", "id": "v02-261014", "date": "2026.10.14", "img": "img/v02-261014.jpg", "parts": [["It's a golf kink situation,", "grab the shaft of my", "club with two hands", "grasp it firmly and show your", "confidence.", "", "SHOW IT DON'T HIDE", "LET THE WORLD SEE", "Your childlike wonder", "as you begin to pee", "Then the bathroom", "window opens for all to see.", "", "And I feel such an enormous", "desire to pee.", "For the drink has set in", "And the dance will begin.", "The shoes came off but", "the stink was unbearable.", "They all died."]], "napkins": 1}, {"kind": "pic", "id": "v02-napkins", "caption": "EXHIBIT G", "img": "img/napkins.jpg", "alt": "Napkins with poems and drawings spread across a table, eyes barred.", "tilt": -2}]}, {"id": "v01", "label": "VOL. 01", "range": "2026.02.14 – 2026.04.15", "title": "img/title01.png", "items": [{"kind": "poem", "id": "v01-260214", "date": "2026.02.14", "pages": [{"img": "img/v01-0214a.jpg", "lines": ["Actual art is the smell", "of that fucking ceasar", "salad", "", "The smoke coming out of", "your nostrils is not an", "illusion", "", "The fear of tomorrow only", "turns your hope into dread", "The Past belongs to the", "dead. Tomorrow belongs", "to the living.", "Stick to you like ~~glue~~", "meet me under the", "banyan tree, baby,", "", "SO SHAVE MY BODY"]}, {"img": "img/v01-0214b.jpg", "lines": ["Cigarettes", "mosh pit.", "Fuck a duck, im cool.", "After the hug, you get a tug."]}], "napkins": 2}, {"kind": "poem", "id": "v01-260218", "date": "2026.02.18", "pages": [{"img": "img/v01-0218a.jpg", "lines": ["I challenged the ruler", "of the pony clan to", "a horse fight.", "Which is a fight between", "horses, but then also we", "each had to choose another horse", "to use as a weapon.", "I chose a unicorn, the", "deadliest of horses. Next to", "a pegasus, of course.", "And when the wings were fully", "formed, the sky opened up and", "swallowed the entire menagerie.", "The flock of swans swooped", "through blinding a pilot of a", "747, causing a devastating", "catastrophe."]}, {"img": "img/v01-0218b.jpg", "lines": ["I daydreamed about yelling", "at my ex for cutting during", "a merge.", "You took the wrong exit,", "and now we're gonna miss the", "pony show.", "I can't fathom what happened", "with my brother.", "My brother is a pony. I am", "half pony.", "I'm going to the pony show to", "sympathize w the full blooded", "ponies; I will connect with them", "emotionally but then return to", "my cushy half-horse life.", "", "~Later at the Pony Show~", "", "This went horribly wrong. The", "full ponies barged in and", "ridiculed the talent.", "I never thought it would end like this.", "in a pile of hooves & HORROR.", "I watched in fear as my brother's", "remains were scattered at my feet.", "I vowed to take revenge on the ponies."]}], "napkins": 2}, {"kind": "poem", "id": "v01-260226", "date": "2026.02.26", "pages": [{"img": "img/v01-0226.jpg", "lines": ["Fuck, time is short", "Shit, now I'm panicking", "Balls, I'm fainting.", "Taint, that always", "the way", "Butthole, please check on", "this mole.", "", "Damn, I want to keep", "living", "Dude, what's next", "Touch me one more -", "one last -", "time", "", "And watch me strut", "in my laundered pants", "Until I drop them as", "I strip dance."]}], "napkins": 1}, {"kind": "poem", "id": "v01-260304", "date": "2026.03.04", "pages": [{"img": "img/v01-0304.jpg", "lines": ["Saying goodbye without really", "knowing what's leaving,", "is the best way to understand", "a tree.", "Immerse yourself in the sap", "of life and drink in the", "pools of sludge.", "The hearts don't fit [BAR] in", "the bed of my pickup truck.", "\"I love a tight screw,", "as you well know, Jason,\"", "moaned Valarie seductively.", "", "Once again, the apple", "didn't fall far from the tree.", "Instead it launched", "itself so far left it", "was right. Juuuust right"]}], "napkins": 1}, {"kind": "poem", "id": "v01-260311", "date": "2026.03.11", "pages": [{"img": "img/v01-0311.jpg", "lines": ["I might be a lowkey menace.", "I NEED A NAP", "But will fucking fight", "You", "If you agree to fight, we", "might even kiss", "Hot, sticky tongues going", "wherever they want", "", "Your mom ate.", "Your other mom made biscuits", "I ate what your mom", "gave me", "", "FUCK YEAH YOU DID"]}], "napkins": 1}, {"kind": "poem", "id": "v01-260401", "date": "2026.04.01", "pages": [{"img": "img/v01-0401.jpg", "lines": ["Mildly handsome and wildly", "misinformed.", "It was dark, wet... The rain", "could not be stopped.", "His body glistened, slick", "and chiseled", "She said it was delicious", "She meant it was ~~maybe~~ mind-blowing", "Because she's a frisky gal", "She and all her pals", "slowly faded away to nothing", "AWW NUTS", "The squirell was lost but", "filled with determination.", "He ran towards the light with", "his tail tucked between his legs.", "It was a little wet, for unknown", "reasons, but that made the", "glitter stick better.", "And with that, the little boy", "who watched in the corner", "exploded."]}], "napkins": 1}, {"kind": "poem", "id": "v01-260408", "date": "2026.04.08", "pages": [{"img": "img/v01-0408.jpg", "lines": ["I saw 12 bands in Japan", "and I still smell like denim.", "I put my jeans in", "the freezer.", "Something started moving", "inside it, eyes blinking, with", "an eerie soundtrack in the", "background.", "Gravy pouring out. Thick", "and creamy.", "The fluids flooded his nostrils", "and he drowned,", "in a barrel of warm milk", "as the milk curdled into cheese.", "She considered the passing of time and", "her place in the universe.", "WOW! Its Bigger than I", "thought", "WELL SHIT..."]}], "napkins": 1}, {"kind": "poem", "id": "v01-260415", "date": "2026.04.15", "pages": [{"img": "img/v01-0415.jpg", "lines": ["I order Long Island iced teas", "exclusively at Applebee's", "It comes out different", "every time.", "I still can't believe she did that.", "Well Fuck", "And Fuck he did.* WELL!*", "Leather Clad Chest glistening", "Horny sex addicts listening", "to the beats and bumps that make", "the world go round", "So now cheers + good wishes to", "yours. Please swallow.", "Otherwise my loins", "will burst", "All over the wall and", "ceiling"]}], "napkins": 1}, {"kind": "pic", "id": "ev-sign", "img": "img/ev-sign.jpg", "alt": "A hand-lettered sign: ZINE MEETUP!! OPEN TO ALL! READ ZINES! MAKE ZINES! At 9:45.", "tilt": 3, "caption": "EXHIBIT H"}]}]}</script>
+<script>
+(function () {
+  const data = JSON.parse(document.getElementById('data').textContent);
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = line => esc(line)
+    .replace(/\[BAR\]/g, '<span class="redact" role="img" aria-label="scribbled out"></span>')
+    .replace(/~~(.+?)~~/g, '<s>$1</s>');
+  const verse = lines => lines.map(l => l.trim() === '' ? '<div class="gap"></div>' : `<div class="ln">${fmt(l)}</div>`).join('');
+  const pad = n => String(n).padStart(2, '0');
+  const walls = document.getElementById('walls');
+  let eager = 0;
+
+  data.volumes.forEach(vol => {
+    const feed = document.getElementById('feed-' + vol.id);
+    if (!feed) return;
+    const vlabel = vol.label.replace('VOL.', 'Vol.');
+    const poems = vol.items.filter(i => i.kind === 'poem');
+    // normalise both data shapes into pages: [{img, lines}]
+    poems.forEach(p => { if (!p.pages) p.pages = [{ img: p.img, lines: p.parts.flatMap((part, i) => i ? ['\u0000', ...part] : part) }]; });
+    const total = poems.length;
+    let red = 0, nap = 0;
+    poems.forEach(p => { nap += p.napkins; p.pages.forEach(pg => pg.lines.forEach(l => { red += (l.match(/\[BAR\]/g) || []).length; })); });
+    const st = document.querySelector(`[data-stats="${vol.id}"]`);
+    if (st) { st.querySelector('[data-k="poems"]').textContent = total; st.querySelector('[data-k="napkins"]').textContent = nap; st.querySelector('[data-k="redact"]').textContent = red; }
+
+    const group = document.createElement('div');
+    group.className = 'wall-group';
+    group.innerHTML = `<h3>${vol.label}</h3><div class="wall"></div>`;
+    walls.appendChild(group);
+    const wall = group.querySelector('.wall');
+
+    let n = 0;
+    vol.items.forEach(it => {
+      if (it.kind !== 'poem') {
+        const sec = document.createElement('section');
+        sec.className = 'evidence wrap'; sec.id = it.id;
+        sec.innerHTML = `<figure style="transform: rotate(${it.tilt}deg)"><img src="${it.img}" alt="${esc(it.alt)}" loading="lazy">
+          <figcaption><b>${it.caption}</b><span>${vlabel} · found with the napkins</span></figcaption></figure>`;
+        feed.appendChild(sec);
+        return;
+      }
+      n += 1;
+      const [y, m, d] = it.date.split('.');
+      const dup = /[b-z]$/.test(it.id);
+      const unit = vol.id === 'v01' ? 'page' : 'napkin';
+      const spreads = it.pages.map((pg, i) => {
+        const body = pg.lines.map(l => l === '\u0000' ? '<div class="turn" aria-hidden="true"></div>' : (l.trim() === '' ? '<div class="gap"></div>' : `<div class="ln">${fmt(l)}</div>`)).join('');
+        eager += 1;
+        return `<div class="spread">
+          <figure class="napkin"><img src="${pg.img}" alt="The handwritten ${unit} from ${it.date}${it.pages.length > 1 ? ', ' + unit + ' ' + (i + 1) : ''}." loading="${eager < 4 ? 'eager' : 'lazy'}" width="1000" height="1545"></figure>
+          <div class="sheet">${i === 0 ? `<div class="date">${it.date}</div>` : `<div class="date">cont.</div>`}
+            <div class="verse">${body}</div>
+            <div class="foot"><span>${vlabel}${it.pages.length > 1 ? ' · ' + (i + 1) + ' of ' + it.pages.length : ''}</span><span>${pad(n)} / ${total}</span></div></div>
+        </div>`;
+      }).join('');
+      const sec = document.createElement('article');
+      sec.className = 'poem wrap'; sec.id = it.id;
+      sec.innerHTML = `<div class="in">
+        <div class="stamp"><div class="big" aria-hidden="true"><span>${y}</span>${m}.${d}</div>
+          <div class="meta">${vlabel} · No. ${pad(n)} / ${total}<br>${it.napkins} ${unit}${it.napkins > 1 ? 's' : ''}</div></div>
+        ${spreads}</div>`;
+      feed.appendChild(sec);
+      const a = document.createElement('a');
+      a.href = '#' + it.id;
+      a.innerHTML = `${m}.${d}<small>${dup ? 'II' : pad(n)}</small>`;
+      a.setAttribute('aria-label', `${vlabel}, poem ${n}, ${it.date}`);
+      wall.appendChild(a);
+    });
+  });
+
+  const arts = [...document.querySelectorAll('article.poem')];
+  const go = el => {
+    el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  };
+  const random = () => go(arts[Math.floor(Math.random() * arts.length)]);
+  document.getElementById('random').addEventListener('click', random);
+  const current = () => { let idx = -1; arts.forEach((a, i) => { if (a.getBoundingClientRect().top <= 84) idx = i; }); return idx; };
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('input,textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key.toLowerCase(); const c = current();
+    if (k === 'j') go(arts[Math.min(arts.length - 1, c + 1)]);
+    else if (k === 'k') go(arts[Math.max(0, c - 1)]);
+    else if (k === 'r') random();
+  });
+
+  const vols = ['v03', 'v02', 'v01'].map(id => [document.getElementById(id), document.getElementById('nav-' + id)]);
+  const mark = () => {
+    let cur = vols[0];
+    vols.forEach(v => { if (v[0].getBoundingClientRect().top < innerHeight * .5) cur = v; });
+    vols.forEach(v => v[1].classList.toggle('on', v === cur));
+  };
+  addEventListener('scroll', mark, { passive: true });
+  addEventListener('hashchange', mark);
+  const id = location.hash.slice(1); const el = id && document.getElementById(id); if (el) el.scrollIntoView();
+  mark();
+})();
+</script>
+
+</body>
+</html>
